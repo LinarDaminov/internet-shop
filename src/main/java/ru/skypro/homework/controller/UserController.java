@@ -3,7 +3,6 @@ package ru.skypro.homework.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.skypro.homework.dto.UserDto;
 
 @RestController
 @CrossOrigin(value = "http://localhost:3000")
@@ -12,7 +11,8 @@ public class UserController {
     @PostMapping("/set_password")
     public ResponseEntity<?> setPassword(@RequestParam("currentPassword") String currentPassword,
                                       @RequestParam("newPassword") String newPassword) {
-        return new ResponseEntity<>(new UserDto(), HttpStatus.ACCEPTED);
+        //TODO Проверить наличие авторизованного пользователя по текущему паролю
+        return new ResponseEntity<>(newPassword, HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/me")
