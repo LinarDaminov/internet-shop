@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class AdDto {
     Integer userId;
-    String imageReference;
+    String avatarReference;
     Integer adId;
     Integer price;
     String title;

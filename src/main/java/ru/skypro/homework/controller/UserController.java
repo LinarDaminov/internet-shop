@@ -1,5 +1,6 @@
 package ru.skypro.homework.controller;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.UserDto;
@@ -28,14 +29,14 @@ public class UserController {
     }
 
     @PatchMapping("/me")
-    public UserUpdateDto updateUser(@RequestParam String firstName,
-                                    @RequestParam String lastName,
-                                    @RequestParam String phone) {
+    public UserUpdateDto updateUser(@RequestParam("firstName") String firstName,
+                                    @RequestParam("lastName") String lastName,
+                                    @RequestParam("phone") String phone) {
         return service.updateUser(firstName, lastName, phone);
     }
 
-    @PatchMapping("/me/image")
-    public void updateAvatar(@RequestBody MultipartFile avatar) {
+    @PatchMapping(value = "/me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void updateAvatar(@RequestParam("image") MultipartFile avatar) {
         service.updateAvatar(avatar);
     }
 }

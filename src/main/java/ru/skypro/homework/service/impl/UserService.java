@@ -28,7 +28,7 @@ public class UserService {
     }
 
     public UserDto getUser() {
-        return mappingUtils.mapToDto(AuthServiceImpl.getAuthUser());
+        return mappingUtils.mapToUserDto(AuthServiceImpl.getAuthUser());
     }
 
     public UserUpdateDto updateUser(String firstName, String lastName, String phone) {
