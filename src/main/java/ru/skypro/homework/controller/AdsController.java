@@ -1,6 +1,5 @@
 package ru.skypro.homework.controller;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.AdDto;
@@ -31,27 +30,27 @@ public class AdsController {
     }
 
     @GetMapping("/ads/{id}")
-    public ExtendedAdDto getAd(@RequestParam Integer adId) {
-        return adsService.getAdInfo(adId);
+    public ExtendedAdDto getAd(@PathVariable Integer id) {
+        return adsService.getAdInfo(id);
     }
 
     @DeleteMapping("/ads/{id}")
-    public void deleteAd(@RequestParam Integer id) {
-
+    public void deleteAd(@PathVariable Integer id) {
+        adsService.deleteAd(id);
     }
 
     @PatchMapping("/ads/{id}")
-    public void updateAd(@RequestParam Integer id) {
-
+    public AdDto updateAd(@RequestBody CreateOrUpdateAdDto dto, @PathVariable Integer id) {
+        return adsService.updateAd(dto, id);
     }
 
     @GetMapping("/ads/me")
-    public ResponseEntity<?> getUserAds() {
-        return null;
+    public List<AdDto> getUserAds() {
+        return adsService.getUserAds();
     }
 
     @PatchMapping("/ads/{id}/image")
-    public void updateAdImage(@RequestParam Integer id) {
-
+    public String updateAdImage(@RequestBody MultipartFile image, @PathVariable Integer id) {
+        return adsService.updateAdImage(image, id);
     }
 }

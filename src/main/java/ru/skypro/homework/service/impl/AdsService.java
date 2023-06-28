@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AdsService {
@@ -40,5 +41,26 @@ public class AdsService {
 
     public ExtendedAdDto getAdInfo(Integer adId) {
         return mappingUtils.mapToExtendedAdDto(adsRepository.getByAdId(adId));
+    }
+
+    public void deleteAd(Integer adId) {
+        adsRepository.deleteById(adId);
+    }
+
+    public AdDto updateAd(CreateOrUpdateAdDto dto, Integer id) {
+        return mappingUtils.mapToAdDto(mappingUtils.mapToAd(dto, adsRepository.getByAdId(id).getImageReference()));
+    }
+
+    public List<AdDto> getUserAds() {
+        return adsRepository
+                .findAllByUserId(AuthServiceImpl.getAuthUser().getId())
+                .stream()
+                .map(mappingUtils::mapToAdDto)
+                .collect(Collectors.toList());
+    }
+
+    public String updateAdImage(MultipartFile image, Integer id) {
+        adsRepository.getByAdId(id).setImageReference(String.valueOf(image));
+        return adsRepository.getByAdId(id).getImageReference();
     }
 }
