@@ -1,13 +1,12 @@
 package ru.skypro.homework.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-public class UserDto {
-    private Integer id;
-    private String email;
+@AllArgsConstructor
+public class UserUpdateDto {
     private String firstName;
     private String lastName;
     private String phone;
-    private String image;
 }

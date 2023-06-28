@@ -1,5 +1,7 @@
 package ru.skypro.homework.service.impl;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,5 +45,10 @@ public class AuthServiceImpl implements AuthService {
             .roles(role.name())
             .build());
     return true;
+  }
+
+  public static ru.skypro.homework.model.User getAuthUser() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    return (ru.skypro.homework.model.User) authentication.getPrincipal();
   }
 }

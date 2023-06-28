@@ -1,4 +1,52 @@
 package ru.skypro.homework.service.impl;
 
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import ru.skypro.homework.dto.UserDto;
+import ru.skypro.homework.dto.UserUpdateDto;
+import ru.skypro.homework.model.User;
+import ru.skypro.homework.repositories.UserRepository;
+import ru.skypro.homework.utils.MappingUtils;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+@Service
 public class UserService {
+    private final UserRepository userRepository;
+    private final MappingUtils mappingUtils;
+
+    public UserService(UserRepository userRepository, MappingUtils mappingUtils) {
+        this.userRepository = userRepository;
+        this.mappingUtils = mappingUtils;
+    }
+
+    public void updatePassword(String oldPass, String newPass) {
+        User user = userRepository.getByPassword(oldPass);
+        user.setPassword(newPass);
+    }
+
+    public UserDto getUser() {
+        return mappingUtils.mapToDto(AuthServiceImpl.getAuthUser());
+    }
+
+    public UserUpdateDto updateUser(String firstName, String lastName, String phone) {
+        User user = AuthServiceImpl.getAuthUser();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setPhone(phone);
+        return new UserUpdateDto(firstName, lastName, phone);
+    }
+
+    public void updateAvatar(MultipartFile avatar) {
+        File convertFile = new File(AuthServiceImpl.getAuthUser().getAvatarReference() + avatar.getOriginalFilename());
+        try (FileOutputStream stream = new FileOutputStream(convertFile)) {
+            if (convertFile.createNewFile()) {
+                stream.write(avatar.getBytes());
+            }
+        } catch (IOException e) {
+            e.getCause();
+        }
+    }
 }
