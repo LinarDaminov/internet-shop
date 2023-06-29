@@ -1,17 +1,16 @@
 package ru.skypro.homework.utils;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
-import ru.skypro.homework.dto.AdDto;
-import ru.skypro.homework.dto.CreateOrUpdateAdDto;
-import ru.skypro.homework.dto.ExtendedAdDto;
-import ru.skypro.homework.dto.UserDto;
+import ru.skypro.homework.dto.*;
 import ru.skypro.homework.model.Ad;
+import ru.skypro.homework.model.Comment;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.service.impl.AuthServiceImpl;
 
 @Service
 public class MappingUtils {
-    public UserDto mapToUserDto(User entity) {
+    public UserDto mapToUserDto(@NotNull User entity) {
         UserDto dto = new UserDto();
         dto.setId(entity.getId());
         dto.setEmail(entity.getEmail());
@@ -22,7 +21,7 @@ public class MappingUtils {
         return dto;
     }
 
-    public AdDto mapToAdDto(Ad entity) {
+    public AdDto mapToAdDto(@NotNull Ad entity) {
         AdDto dto = new AdDto();
         dto.setAdId(entity.getAdId());
         dto.setUserId(entity.getUserId());
@@ -32,7 +31,7 @@ public class MappingUtils {
         return dto;
     }
 
-    public ExtendedAdDto mapToExtendedAdDto(Ad entity) {
+    public ExtendedAdDto mapToExtendedAdDto(@NotNull Ad entity) {
         User user = AuthServiceImpl.getAuthUser();
         ExtendedAdDto dto = new ExtendedAdDto();
         dto.setAdId(entity.getAdId());
@@ -47,7 +46,7 @@ public class MappingUtils {
         return dto;
     }
 
-    public Ad mapToAd(CreateOrUpdateAdDto dto, String imageReference) {
+    public Ad mapToAd(@NotNull CreateOrUpdateAdDto dto, @NotNull String imageReference) {
         User user = AuthServiceImpl.getAuthUser();
         Ad ad = new Ad();
         ad.setUserId(user.getId());
@@ -57,5 +56,16 @@ public class MappingUtils {
         ad.setDescription(dto.getDescription());
         ad.setImageReference(imageReference);
         return ad;
+    }
+
+    public CommentDto mapToCommentDto(@NotNull Comment entity) {
+        CommentDto dto = new CommentDto();
+        dto.setUserId(entity.getUserId());
+        dto.setFirstName(entity.getFirstName());
+        dto.setUserAvatarReference(entity.getUserAvatarReference());
+        dto.setCommentId(entity.getCommentId());
+        dto.setDateOfCreation(entity.getDateOfCreation());
+        dto.setText(entity.getText());
+        return dto;
     }
 }

@@ -12,4 +12,5 @@ public class Comment {
     LocalDateTime dateOfCreation;
     Integer commentId;
     String text;
+    Integer adId;
 }
