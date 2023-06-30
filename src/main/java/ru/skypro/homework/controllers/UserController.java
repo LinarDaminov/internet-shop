@@ -1,4 +1,4 @@
-package ru.skypro.homework.controller;
+package ru.skypro.homework.controllers;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -6,7 +6,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.UserDto;
 import ru.skypro.homework.dto.UserUpdateDto;
-import ru.skypro.homework.service.impl.UserService;
+import ru.skypro.homework.services.impl.UserService;
 
 @ControllerAdvice
 @RestController

@@ -1,4 +1,4 @@
-package ru.skypro.homework.controller;
+package ru.skypro.homework.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -8,7 +8,7 @@ import ru.skypro.homework.dto.AdDto;
 import ru.skypro.homework.dto.CreateOrUpdateAdDto;
 import ru.skypro.homework.dto.ExtendedAdDto;
 import ru.skypro.homework.model.Ad;
-import ru.skypro.homework.service.impl.AdsService;
+import ru.skypro.homework.services.impl.AdsService;
 
 import java.util.List;
 

@@ -6,7 +6,7 @@ import ru.skypro.homework.dto.*;
 import ru.skypro.homework.model.Ad;
 import ru.skypro.homework.model.Comment;
 import ru.skypro.homework.model.User;
-import ru.skypro.homework.service.impl.AuthServiceImpl;
+import ru.skypro.homework.services.impl.AuthServiceImpl;
 
 @Service
 public class MappingUtils {

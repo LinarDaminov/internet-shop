@@ -1,9 +1,9 @@
-package ru.skypro.homework.controller;
+package ru.skypro.homework.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import ru.skypro.homework.dto.CommentDto;
-import ru.skypro.homework.service.impl.CommentService;
+import ru.skypro.homework.services.impl.CommentService;
 
 import java.util.List;
 
