@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.skypro.homework.dto.CommentDto;
 import ru.skypro.homework.model.Comment;
 import ru.skypro.homework.model.User;
+import ru.skypro.homework.repositories.AdsRepository;
 import ru.skypro.homework.repositories.CommentRepository;
 import ru.skypro.homework.utils.MappingUtils;
 
@@ -15,10 +16,12 @@ import java.util.stream.Collectors;
 public class CommentService {
     private final CommentRepository commentRepository;
     private final MappingUtils mappingUtils;
+    private final AdsRepository adsRepository;
 
-    public CommentService(CommentRepository commentRepository, MappingUtils mappingUtils) {
+    public CommentService(CommentRepository commentRepository, MappingUtils mappingUtils, AdsRepository adsRepository) {
         this.commentRepository = commentRepository;
         this.mappingUtils = mappingUtils;
+        this.adsRepository = adsRepository;
     }
 
     public List<CommentDto> getAdComments(Integer id) {
@@ -28,12 +31,12 @@ public class CommentService {
     public CommentDto createComment(String text, Integer adId) {
         User user = AuthServiceImpl.getAuthUser();
         Comment comment = new Comment();
-        comment.setUserId(user.getId());
+        comment.setUserId(user);
         comment.setFirstName(user.getFirstName());
         comment.setUserAvatarReference(user.getAvatarReference());
         comment.setDateOfCreation(LocalDateTime.now());
         comment.setText(text);
-        comment.setAdId(adId);
+        comment.setAdId(adsRepository.getByAdId(adId));
         commentRepository.saveAndFlush(comment);
         return mappingUtils.mapToCommentDto(comment);
     }

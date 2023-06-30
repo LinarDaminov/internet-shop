@@ -2,15 +2,21 @@ package ru.skypro.homework.model;
 
 import lombok.Data;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
+@Entity
 public class Comment {
-    Integer userId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer commentId;
+    @ManyToOne
+    User userId;
+    @ManyToOne
+    Ad adId;
     String userAvatarReference;
     String firstName;
     LocalDateTime dateOfCreation;
-    Integer commentId;
     String text;
-    Integer adId;
 }
