@@ -32,6 +32,7 @@ public class AdsController {
     public AdDto addAd(CreateOrUpdateAdDto properties, MultipartFile image) {
         return adsService.createAd(properties, image);
     }
+
     @ExceptionHandler({HttpClientErrorException.Unauthorized.class, HttpClientErrorException.NotFound.class})
     @GetMapping("/ads/{id}")
     public ExtendedAdDto getAd(@PathVariable Integer id) {

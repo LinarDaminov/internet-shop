@@ -40,7 +40,7 @@ public class MappingUtils {
     public AdDto mapToAdDto(@NotNull Ad entity) {
         AdDto dto = new AdDto();
         dto.setAdId(entity.getAdId());
-        dto.setUserId(entity.getUserId());
+        dto.setUserId(AuthServiceImpl.getAuthUser().getId());
         dto.setAvatarReference(entity.getAvatarReference());
         dto.setTitle(entity.getTitle());
         dto.setPrice(entity.getPrice());
@@ -65,7 +65,7 @@ public class MappingUtils {
     public Ad mapToAd(@NotNull CreateOrUpdateAdDto dto, @NotNull String imageReference) {
         User user = AuthServiceImpl.getAuthUser();
         Ad ad = new Ad();
-        ad.setUserId(user.getId());
+        ad.setUserId(user);
         ad.setAvatarReference(user.getAvatarReference());
         ad.setPrice(dto.getPrice());
         ad.setTitle(dto.getTitle());
@@ -76,7 +76,7 @@ public class MappingUtils {
 
     public CommentDto mapToCommentDto(@NotNull Comment entity) {
         CommentDto dto = new CommentDto();
-        dto.setUserId(entity.getUserId());
+        dto.setUserId(AuthServiceImpl.getAuthUser().getId());
         dto.setFirstName(entity.getFirstName());
         dto.setUserAvatarReference(entity.getUserAvatarReference());
         dto.setCommentId(entity.getCommentId());
