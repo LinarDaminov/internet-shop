@@ -21,6 +21,22 @@ public class MappingUtils {
         return dto;
     }
 
+    public UserUpdateDto mapToUserUpdateDto(@NotNull User entity) {
+        UserUpdateDto dto = new UserUpdateDto();
+        dto.setFirstName(entity.getFirstName());
+        dto.setLastName(entity.getLastName());
+        dto.setPhone(entity.getPhone());
+        return dto;
+    }
+
+    public User mapFromUpdateDto(@NotNull UserUpdateDto dto) {
+        User entity = AuthServiceImpl.getAuthUser();
+        entity.setFirstName(dto.getFirstName());
+        entity.setLastName(dto.getLastName());
+        entity.setPhone(dto.getPhone());
+        return entity;
+    }
+
     public AdDto mapToAdDto(@NotNull Ad entity) {
         AdDto dto = new AdDto();
         dto.setAdId(entity.getAdId());

@@ -31,12 +31,8 @@ public class UserService {
         return mappingUtils.mapToUserDto(AuthServiceImpl.getAuthUser());
     }
 
-    public UserUpdateDto updateUser(String firstName, String lastName, String phone) {
-        User user = AuthServiceImpl.getAuthUser();
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setPhone(phone);
-        return new UserUpdateDto(firstName, lastName, phone);
+    public UserUpdateDto updateUser(UserUpdateDto updateDto) {
+        return mappingUtils.mapToUserUpdateDto(mappingUtils.mapFromUpdateDto(updateDto));
     }
 
     public void updateAvatar(MultipartFile avatar) {
