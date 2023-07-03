@@ -1,32 +1,42 @@
 package ru.skypro.homework.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.skypro.homework.dto.Role;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
-@Data
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String avatarReference;
+    @NotNull
     private String username;
-    private String password;
-    private String email;
+    @NotNull
     private String firstName;
+    @NotNull
     private String lastName;
+    @NotNull
     private String phone;
+    @NotNull
+    private String password;
+    private Boolean enabled;
     @Enumerated(EnumType.STRING)
-    @Column(name = "role")
     private Role role;
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    private List<Ads> ads;
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    private List<Comment> comments;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Avatar avatar;
 
-    public String getRole() {
-        return this.role.name();
-    }
-
-    public void setRole(String role) {
-        this.role = Role.valueOf(role);
-    }
 }

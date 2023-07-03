@@ -1,30 +1,29 @@
 package ru.skypro.homework.model;
-
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.Instant;
-import java.time.LocalDateTime;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table
-public class Comment {
-
+public class Ads {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @NotNull
-    private Instant createdAt;
+    private String title;
+    private String description;
     @NotNull
-    private String text;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Ads ads;
+    private Integer price;
     @ManyToOne(fetch = FetchType.LAZY)
     private User author;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Image image;
+    @OneToMany(mappedBy = "ads", cascade = CascadeType.ALL)
+    private List<Comment> comments;
 }

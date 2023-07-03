@@ -5,12 +5,13 @@ import org.springframework.stereotype.Repository;
 import ru.skypro.homework.model.Comment;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
-    List<Comment> findAllByAdId(Integer id);
 
-    Comment getByAdIdAndCommentId(Integer adId, Integer commId);
+    Optional<Comment> findByIdAndAdsId(Integer commentId, Integer adId);
 
-    void deleteByAdIdAndCommentId(Integer adId, Integer commId);
+    List<Comment> findAllByAdsId (Integer id);
+
 }

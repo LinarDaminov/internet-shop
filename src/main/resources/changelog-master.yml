@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - include:
+      file: liquibase/changesets/avatar.sql
+
+  - include:
+      file: liquibase/changesets/image.sql
+
+  - include:
+      file: liquibase/changesets/users.sql
+
+  - include:
+      file: liquibase/changesets/ads.sql
+
+  - include:
+      file: liquibase/changesets/comment.sql
