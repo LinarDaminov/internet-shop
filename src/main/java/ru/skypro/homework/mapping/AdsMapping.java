@@ -22,7 +22,7 @@ public interface AdsMapping {
     @Mapping(target = "pk", source = "id")
     @Mapping(target = "author", source = "author.id")
     @Mapping(target = "image", source = "image", qualifiedByName = "imageMapping")
-    AdsDTO toDto(Ads ads);
+    AdsDTO toDTO(Ads ads);
 
     @Mapping(target = "authorFirstName", source = "author.firstName")
     @Mapping(target = "authorLastName", source = "author.lastName")

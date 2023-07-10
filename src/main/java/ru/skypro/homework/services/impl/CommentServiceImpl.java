@@ -4,37 +4,61 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.skypro.homework.dto.CommentDTO;
+import ru.skypro.homework.dto.AdsCommentDTO;
+import ru.skypro.homework.exceptions.CommentNotFoundException;
+import ru.skypro.homework.mapping.AdsCommentMapping;
+import ru.skypro.homework.model.Comment;
+import ru.skypro.homework.repositories.CommentRepository;
 import ru.skypro.homework.services.CommentService;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
+
+    private final CommentRepository commentRepository;
+    private final UserServiceImpl userService;
+    private final AdsServiceImpl adsService;
     @Override
-    public CommentDTO addAdsComment(Integer id, CommentDTO commentDTO, Authentication authentication) {
+    public AdsCommentDTO addAdsComment(Integer id, AdsCommentDTO adsCommentDTO, Authentication authentication) {
         return null;
     }
 
     @Override
     public void deleteAdsComment(Integer adId, Integer commentId) {
+        log.debug("Deleting comment with id: {} for ads with id: {}", commentId, adId);
+        Comment comment = getAdsComment(commentId, adId);
+        commentRepository.delete(comment);
+        log.info("Comment removed successfully");
 
     }
 
     @Override
-    public CommentDTO updateComments(Integer adId, Integer commentId, CommentDTO commentDTO) {
+    public AdsCommentDTO updateComments(Integer adId, Integer commentId, AdsCommentDTO adsCommentDTO) {
         return null;
     }
 
     @Override
-    public List<CommentDTO> getComments(Integer id) {
-        return null;
+    public List<AdsCommentDTO> getComments(Integer id) {
+
+        log.debug("Getting comments for ads with id: {}", id);
+        return commentRepository.findAllByAdsId(id)
+                .stream()
+                .map(AdsCommentMapping.INSTANSE::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public CommentDTO getCommentById(Integer id) {
-        return null;
+    public Comment getCommentById(Integer id) {
+        log.debug("Getting comment with id: {}", id);
+        return commentRepository.findById(id).orElseThrow(CommentNotFoundException::new);
+    }
+
+    public Comment getAdsComment(Integer commentId, Integer adId) {
+        log.debug("Getting comment with id: {} for ads with id: {}", commentId, adId);
+        return commentRepository.findByIdAndAdsId(commentId, adId).orElseThrow(CommentNotFoundException::new);
     }
 }

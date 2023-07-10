@@ -13,7 +13,7 @@ public interface UserMapping {
     UserMapping INSTANCE = Mappers.getMapper(UserMapping.class);
 
     @Mapping(target = "image", source = "avatar", qualifiedByName = "avatarMapping")
-    UserDTO toDto(User user);
+    UserDTO toDTO(User user);
 
     @Named("avatarMapping")
     default String avatarMapping(Avatar avatar) {
