@@ -15,7 +15,6 @@ import ru.skypro.homework.services.AuthService;
 public class AuthServiceImpl implements AuthService {
 
   private final UserDetailsManager manager;
-
   private final PasswordEncoder encoder;
 
   public AuthServiceImpl(UserDetailsManager manager, PasswordEncoder passwordEncoder) {
@@ -45,10 +44,5 @@ public class AuthServiceImpl implements AuthService {
             .roles(role.name())
             .build());
     return true;
-  }
-
-  public static ru.skypro.homework.model.User getAuthUser() {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    return (ru.skypro.homework.model.User) authentication.getPrincipal();
   }
 }

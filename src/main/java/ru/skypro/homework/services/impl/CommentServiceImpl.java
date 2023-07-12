@@ -29,7 +29,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void deleteAdsComment(Integer adId, Integer commentId) {
-        log.debug("Deleting comment with id: {} for ads with id: {}", commentId, adId);
+        log.debug("Delete comment with id: {} for ads with id: {}", commentId, adId);
         Comment comment = getAdsComment(commentId, adId);
         commentRepository.delete(comment);
         log.info("Comment removed successfully");
@@ -44,7 +44,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<AdsCommentDTO> getComments(Integer id) {
 
-        log.debug("Getting comments for ads with id: {}", id);
+        log.debug("Get comments for ads with id: {}", id);
         return commentRepository.findAllByAdsId(id)
                 .stream()
                 .map(AdsCommentMapping.INSTANSE::toDTO)
@@ -53,12 +53,12 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment getCommentById(Integer id) {
-        log.debug("Getting comment with id: {}", id);
+        log.debug("Get comment with id: {}", id);
         return commentRepository.findById(id).orElseThrow(CommentNotFoundException::new);
     }
 
     public Comment getAdsComment(Integer commentId, Integer adId) {
-        log.debug("Getting comment with id: {} for ads with id: {}", commentId, adId);
+        log.debug("Get comment with id: {} for ads with id: {}", commentId, adId);
         return commentRepository.findByIdAndAdsId(commentId, adId).orElseThrow(CommentNotFoundException::new);
     }
 }

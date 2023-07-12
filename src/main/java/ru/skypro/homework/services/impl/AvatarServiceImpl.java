@@ -19,15 +19,14 @@ public class AvatarServiceImpl implements ImageAndAvatarService<Avatar> {
     private final AvatarRepository avatarRepository;
     @Override
     public void remove(Avatar avatar) {
-        log.debug("Removing avatar with id {}", avatar.getId());
+        log.debug("Remove avatar with id {}", avatar.getId());
         avatarRepository.delete(avatar);
         log.info("Avatar removed successfully");
-
     }
 
     @Override
     public Avatar uploadImage(MultipartFile file) throws IOException {
-        log.debug("Uploading avatar file: {}", file.getOriginalFilename());
+        log.debug("Upload avatar file: {}", file.getOriginalFilename());
         Avatar avatar = new Avatar();
         avatar.setMediaType(file.getContentType());
         avatar.setFileSize(file.getSize());
@@ -39,7 +38,7 @@ public class AvatarServiceImpl implements ImageAndAvatarService<Avatar> {
 
     @Override
     public Avatar getImageById(Integer id) {
-        log.debug("Getting avatar with id: {}", id);
+        log.debug("Get avatar with id: {}", id);
         return avatarRepository.findById(id).orElseThrow(ImageNotFoundException::new);
     }
 }

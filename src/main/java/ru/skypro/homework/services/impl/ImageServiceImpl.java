@@ -27,7 +27,7 @@ public class ImageServiceImpl implements ImageAndAvatarService<Image> {
 
     @Override
     public Image uploadImage(MultipartFile file) throws IOException {
-        log.debug("Uploading image file: " + file.getOriginalFilename());
+        log.debug("Upload image file: " + file.getOriginalFilename());
         Image image = new Image();
         image.setMediaType(file.getContentType());
         image.setFileSize(file.getSize());
