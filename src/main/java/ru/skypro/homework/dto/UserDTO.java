@@ -1,14 +1,16 @@
 package ru.skypro.homework.dto;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
 public class UserDTO {
-    private String email;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Integer id;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String userName;
     private String firstName;
-    private int id;
     private String lastName;
     private String phone;
-    private String regDate;
-    private String city;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String image;
 }

@@ -1,54 +1,42 @@
 package ru.skypro.homework.services.impl;
-
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.skypro.homework.dto.RegisterReq;
-import ru.skypro.homework.dto.Role;
+import ru.skypro.homework.exceptions.IncorrectArgumentException;
 import ru.skypro.homework.services.AuthService;
+import ru.skypro.homework.services.CustomUserDetailsService;
 
+@Slf4j
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-  private final UserDetailsManager manager;
-
+  private final CustomUserDetailsService manager;
   private final PasswordEncoder encoder;
-
-  public AuthServiceImpl(UserDetailsManager manager, PasswordEncoder passwordEncoder) {
-    this.manager = manager;
-    this.encoder = passwordEncoder;
-  }
 
   @Override
   public boolean login(String userName, String password) {
-    if (!manager.userExists(userName)) {
-      return false;
-    }
+    log.debug("Logging in user: {}", userName);
     UserDetails userDetails = manager.loadUserByUsername(userName);
     return encoder.matches(password, userDetails.getPassword());
   }
 
   @Override
-  public boolean register(RegisterReq registerReq, Role role) {
-    if (manager.userExists(registerReq.getUsername())) {
-      return false;
-    }
-    manager.createUser(
-        User.builder()
-            .passwordEncoder(this.encoder::encode)
-            .password(registerReq.getPassword())
-            .username(registerReq.getUsername())
-            .roles(role.name())
-            .build());
-    return true;
-  }
+  public boolean register(RegisterReq registerReq) {
+    if(registerReq.getUsername() == null || registerReq.getUsername().isBlank()
+            || registerReq.getFirstName() == null || registerReq.getFirstName().isBlank()
+            || registerReq.getLastName() == null || registerReq.getLastName().isBlank()
+            || registerReq.getPhone() == null || registerReq.getPhone().isBlank()
+            || registerReq.getPassword() == null || registerReq.getPassword().isBlank()) throw new IncorrectArgumentException();
 
-  public static ru.skypro.homework.model.User getAuthUser() {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    return (ru.skypro.homework.model.User) authentication.getPrincipal();
+    log.info("Registering new user: {}", registerReq.getUsername());
+    manager.createUser(registerReq);
+    log.info("User {} registered successfully", registerReq.getUsername());
+    return true;
   }
 }

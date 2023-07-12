@@ -1,4 +1,4 @@
-package ru.skypro.homework.controllers;
+package ru.skypro.homework.other;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;

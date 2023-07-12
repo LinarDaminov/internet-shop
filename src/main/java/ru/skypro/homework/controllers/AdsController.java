@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +22,7 @@ import java.io.IOException;
 @RequestMapping("/ads")
 @RequiredArgsConstructor
 public class AdsController {
+
     private final AdsService adsService;
     private final ImageServiceImpl imageService;
 
@@ -60,6 +62,8 @@ public class AdsController {
     }
 
     //Обновление информации об объявлении
+    @PreAuthorize("@adsServiceImpl.getAdsById(#id).getEmail()" +
+            "== authentication.name or hasRole('ROLE_ADMIN')")
     @PatchMapping("/{id}")
     public ResponseEntity<AdsDTO> updateAds(@PathVariable("id") Integer id,
                                             @RequestBody CreateAds createAds) {
@@ -67,6 +71,8 @@ public class AdsController {
     }
 
     //Обновление картинки объявления
+    @PreAuthorize("@adsServiceImpl.getAdsById(#id).getEmail()" +
+            "== authentication.name or hasRole('ROLE_ADMIN')")
     @PatchMapping(value = "/{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateAdsImage(@PathVariable("id") Integer id,
                                             @RequestPart("image") MultipartFile imageFile) throws IOException {
@@ -74,7 +80,10 @@ public class AdsController {
         return ResponseEntity.ok().build();
     }
 
+
     //Удаление объявления
+    @PreAuthorize("@adsServiceImpl.getAdsById(#id).getEmail()" +
+            "== authentication.name or hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removeAds(@PathVariable("id") Integer id) {
         adsService.removeAdsById(id);

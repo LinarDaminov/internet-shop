@@ -17,7 +17,7 @@ public interface AdsMapping {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "author", ignore = true)
     @Mapping(target = "image", ignore = true)
-    Ads toEntity(CreateAds dto);
+    Ads toEntity(CreateAds DTO);
 
     @Mapping(target = "pk", source = "id")
     @Mapping(target = "author", source = "author.id")

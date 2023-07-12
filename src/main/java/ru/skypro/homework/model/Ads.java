@@ -1,5 +1,7 @@
 package ru.skypro.homework.model;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +26,7 @@ public class Ads {
     private User author;
     @OneToOne(cascade = CascadeType.ALL)
     private Image image;
+    @JsonIgnore
     @OneToMany(mappedBy = "ads", cascade = CascadeType.ALL)
     private List<Comment> comments;
 }

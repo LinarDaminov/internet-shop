@@ -14,7 +14,7 @@ public interface AdsCommentMapping {
     @Mapping(target = "id", source = "pk")
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "ads", ignore = true)
-    Comment toEntity(AdsCommentDTO dto);
+    Comment toEntity(AdsCommentDTO DTO);
 
     @Mapping(target = "author", source = "author.id")
     @Mapping(target = "authorFirstName", source = "author.firstName")
