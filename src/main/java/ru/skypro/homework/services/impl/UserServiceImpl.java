@@ -25,11 +25,12 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AvatarServiceImpl avatarService;
+    private final UserMapping userMapping;
 
     @Override
     public UserDTO getUser(Authentication authentication) {
         log.info("Return details for user: {}", authentication.getName());
-        return UserMapping.INSTANCE.toDTO(getUserByUsername(authentication.getName()));
+        return userMapping.toDTO(getUserByUsername(authentication.getName()));
     }
 
     @Override
@@ -67,7 +68,7 @@ public class UserServiceImpl implements UserService {
         user.setPhone(userDTO.getPhone());
         userRepository.save(user);
         log.debug("User details updated for user: {}", authentication.getName());
-        return UserMapping.INSTANCE.toDTO(user);
+        return userMapping.toDTO(user);
     }
 
 

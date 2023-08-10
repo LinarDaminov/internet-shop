@@ -1,14 +1,14 @@
 package ru.skypro.homework.mapping;
+import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-import org.mapstruct.factory.Mappers;
 import ru.skypro.homework.dto.AdsCommentDTO;
 import ru.skypro.homework.model.Avatar;
 import ru.skypro.homework.model.Comment;
 
+@Mapper(componentModel = "spring")
 public interface AdsCommentMapping {
     String USER_AVATAR = "/users/avatar/";
-    AdsCommentMapping INSTANSE = Mappers.getMapper(AdsCommentMapping.class);
 
     @Mapping(target = "author", ignore = true)
     @Mapping(target = "id", source = "pk")

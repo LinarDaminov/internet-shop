@@ -12,7 +12,6 @@ import ru.skypro.homework.model.Image;
 @Mapper(componentModel = "spring")
 public interface AdsMapping {
     String ADS_IMAGE = "/ads/image/";
-    AdsMapping INSTANCE = Mappers.getMapper(AdsMapping.class);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "author", ignore = true)

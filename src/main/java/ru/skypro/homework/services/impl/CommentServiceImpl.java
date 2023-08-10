@@ -20,11 +20,11 @@ import java.util.stream.Collectors;
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
-    private final UserServiceImpl userService;
-    private final AdsServiceImpl adsService;
+    private final AdsCommentMapping adsCommentMapping;
     @Override
     public AdsCommentDTO addAdsComment(Integer id, AdsCommentDTO adsCommentDTO, Authentication authentication) {
-        return null;
+        Comment comment = adsCommentMapping.toEntity(adsCommentDTO);
+        return adsCommentMapping.toDTO(commentRepository.save(comment));
     }
 
     @Override
@@ -47,7 +47,7 @@ public class CommentServiceImpl implements CommentService {
         log.debug("Get comments for ads with id: {}", id);
         return commentRepository.findAllByAdsId(id)
                 .stream()
-                .map(AdsCommentMapping.INSTANSE::toDTO)
+                .map(adsCommentMapping::toDTO)
                 .collect(Collectors.toList());
     }
 

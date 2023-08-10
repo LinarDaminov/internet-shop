@@ -28,6 +28,7 @@ public class AdsServiceImpl implements AdsService {
     private final UserServiceImpl userService;
     private final AdsRepository adsRepository;
     private final ImageServiceImpl imageService;
+    private final AdsMapping adsMapping;
 
     @Override
     public AdsDTO addAds(MultipartFile imageFile, CreateAds createAds, Authentication authentication) throws IOException {
@@ -37,12 +38,12 @@ public class AdsServiceImpl implements AdsService {
                 || createAds.getDescription() == null || createAds.getDescription().isBlank()
                 || createAds.getPrice() == null) throw new IllegalArgumentException();
 
-        Ads ads = AdsMapping.INSTANCE.toEntity(createAds);
+        Ads ads = adsMapping.toEntity(createAds);
         User user = userService.getUserByUsername(authentication.getName());
         ads.setAuthor(user);
         Image image = imageService.uploadImage(imageFile);
         ads.setImage(image);
-        return AdsMapping.INSTANCE.toDTO(adsRepository.save(ads));
+        return adsMapping.toDTO(adsRepository.save(ads));
     }
     @Override
     public List<AdsDTO> getAllAds() {
@@ -50,7 +51,7 @@ public class AdsServiceImpl implements AdsService {
         log.debug("Get all ads");
         return adsRepository.findAll()
                 .stream()
-                .map(AdsMapping.INSTANCE::toDTO)
+                .map(adsMapping::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -66,7 +67,7 @@ public class AdsServiceImpl implements AdsService {
     public FullAds getAdsById(Integer id) {
 
         log.debug("Getting ads by id: {}", id);
-        return AdsMapping.INSTANCE.toFullAds(findAdsById(id));
+        return adsMapping.toFullAds(findAdsById(id));
     }
 
     @Override
@@ -76,7 +77,7 @@ public class AdsServiceImpl implements AdsService {
         return adsRepository.
                 findAllByAuthorId(userService.getUserByUsername(authentication.getName()).getId())
                 .stream()
-                .map(AdsMapping.INSTANCE::toDTO)
+                .map(adsMapping::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -95,7 +96,7 @@ public class AdsServiceImpl implements AdsService {
         ads.setPrice(createAds.getPrice());
         adsRepository.save(ads);
         log.info("Ads details updated for ads: {}", ads.getTitle());
-        return AdsMapping.INSTANCE.toDTO(ads);
+        return adsMapping.toDTO(ads);
     }
 
     @Override

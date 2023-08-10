@@ -7,16 +7,17 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Table
 public class Avatar {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
+
     private String mediaType;
+
     private Long fileSize;
+
     @Lob
     @Type(type="org.hibernate.type.BinaryType")
     private byte[] data;

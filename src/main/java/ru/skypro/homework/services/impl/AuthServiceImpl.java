@@ -1,14 +1,18 @@
 package ru.skypro.homework.services.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.skypro.homework.dto.RegisterReq;
 import ru.skypro.homework.exceptions.IncorrectArgumentException;
+import ru.skypro.homework.model.User;
 import ru.skypro.homework.services.AuthService;
 import ru.skypro.homework.services.CustomUserDetailsService;
+import ru.skypro.homework.services.UserService;
 
 @Slf4j
 @Service
@@ -18,6 +22,7 @@ public class AuthServiceImpl implements AuthService {
 
   private final CustomUserDetailsService manager;
   private final PasswordEncoder encoder;
+  private static UserService userService;
 
   @Override
   public boolean login(String userName, String password) {
@@ -39,4 +44,5 @@ public class AuthServiceImpl implements AuthService {
     log.info("User {} registered successfully", registerReq.getUsername());
     return true;
   }
+
 }
