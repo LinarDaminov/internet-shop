@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Table
 public class Ads {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotNull

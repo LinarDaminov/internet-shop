@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class Avatar {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String mediaType;
