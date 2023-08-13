@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS ads(
     );
 CREATE TABLE IF NOT EXISTS comment(
                                       id              SERIAL PRIMARY KEY,
-                                      created_at      TIMESTAMP NOT NULL,
+                                      created_at      TIMESTAMP,
                                       text            TEXT NOT NULL,
                                       ads_id          INTEGER REFERENCES ads(id),
     author_id       INTEGER REFERENCES users(id)

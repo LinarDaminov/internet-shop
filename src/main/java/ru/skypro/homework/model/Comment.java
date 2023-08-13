@@ -19,9 +19,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-
     private Instant createdAt;
-
 
     private String text;
 
@@ -29,6 +27,7 @@ public class Comment {
     private Ads ads;
 
     @ManyToOne(fetch = FetchType.LAZY)
+
     private User author;
 
 }
