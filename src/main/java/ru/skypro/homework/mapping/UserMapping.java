@@ -10,7 +10,6 @@ import ru.skypro.homework.model.User;
 @Mapper(componentModel = "spring")
 public interface UserMapping {
     String USER_AVATAR = "/users/avatar/";
-    UserMapping INSTANCE = Mappers.getMapper(UserMapping.class);
 
     @Mapping(target = "image", source = "avatar", qualifiedByName = "avatarMapping")
     UserDTO toDTO(User user);
